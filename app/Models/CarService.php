@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class CarService extends Model
+{
+    use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'name',
+        'slug',
+        'price',
+        'about',
+        'photo',
+        'icon',
+        'duration_in_hour',
+    ];
+
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(BookingTransaction::class, 'car_service_id');
+    }
+
+    public function storeServices(): HasMany
+    {
+        return $this->hasMany(StoreService::class, 'car_service_id');
+    }
+}
